@@ -2,67 +2,97 @@
  * Sample plugin.
  */
 Draw.loadPlugin(function(ui) {
-    // Adds custom sidebar entry
-    ui.sidebar.addPalette('esolia', 'eSolia', true, function(content) {
 
-        // content.appendChild(ui.sidebar.createVertexTemplate(null, 120, 60));
-        content.appendChild(ui.sidebar.createVertexTemplate('shape=image;image=http://download.esolia.net.s3.amazonaws.com/img/eSolia-Logo-Color.svg;resizable=0;movable=0;rotatable=0', 100, 100));
-        content.appendChild(ui.sidebar.createVertexTemplate('text;spacingTop=-5;fontFamily=Courier New;fontSize=8;fontColor=#999999;resizable=0;movable=0;rotatable=0', 100, 100));
-        content.appendChild(ui.sidebar.createVertexTemplate('rounded=1;whiteSpace=wrap;gradientColor=none;fillColor=#004C99;shadow=1;strokeColor=#FFFFFF;align=center;fontColor=#FFFFFF;strokeWidth=3;fontFamily=Courier New;verticalAlign=middle', 100, 100));
-        content.appendChild(ui.sidebar.createVertexTemplate('curved=1;strokeColor=#004C99;endArrow=oval;endFill=0;strokeWidth=3;shadow=1;dashed=1', 100, 100));
-    });
-
-    // Collapses default sidebar entry and inserts this before
-    var c = ui.sidebar.container;
-    c.firstChild.click();
-    c.insertBefore(c.lastChild, c.firstChild);
-    c.insertBefore(c.lastChild, c.firstChild);
-
-    // Adds logo to footer
-    ui.footerContainer.innerHTML = '<img width=50px height=17px align="right" style="margin-top:14px;margin-right:12px;" ' + 'src="http://download.esolia.net.s3.amazonaws.com/img/eSolia-Logo-Color.svg"/>';
-
-	// Adds variables in labels (%today, %filename%)
-	var superGetLabel = ui.editor.graph.getLabel;
+	var graph = ui.editor.graph;
+	var enabled = true;
+	var counter = 0;
 	
-	ui.editor.graph.getLabel = function(cell)
+	// Creates the shape for the shape number and puts it into the draw pane
+	var redrawShape = graph.cellRenderer.redrawShape;
+	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
-		var result = superGetLabel.apply(this, arguments);
-		
-		if (result != null)
+		var result = redrawShape.apply(this, arguments);
+
+		if (result && enabled && graph.model.isVertex(state.cell))
 		{
-			var today = new Date().toLocaleString();
-			var file = ui.getCurrentFile();
-			var filename = (file != null && file.getTitle() != null) ? file.getTitle() : '';
-			
-			result = result.replace('%today%', today).replace('%filename%', filename);
+			if (state.shape != null && state.secondLabel == null)
+			{
+				var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + (++counter) + '</div>';
+				state.secondLabel = new mxText(value, new mxRectangle(),
+						mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
+
+				// Styles the label
+				state.secondLabel.size = 12;
+				state.secondLabel.dialect = state.shape.dialect;
+				state.secondLabel.dialect = mxConstants.DIALECT_STRICTHTML;
+				graph.cellRenderer.initializeLabel(state, state.secondLabel);
+			}
+		}
+		
+		if (state.secondLabel != null)
+		{
+			var scale = graph.getView().getScale();
+			var bounds = new mxRectangle(state.x + state.width - 4 * scale, state.y + 4 * scale, 0, 0);
+			state.secondLabel.state = state;
+			state.secondLabel.scale = scale;
+			state.secondLabel.bounds = bounds;
+			state.secondLabel.redraw();
 		}
 		
 		return result;
 	};
+
+	// Destroys the shape number
+	var destroy = graph.cellRenderer.destroy;
+	graph.cellRenderer.destroy = function(state)
+	{
+		destroy.apply(this, arguments);
+		
+		if (state.secondLabel != null)
+		{
+			state.secondLabel.destroy();
+			state.secondLabel = null;
+		}
+	};
+	
+	graph.cellRenderer.getShapesForState = function(state)
+	{
+		return [state.shape, state.text, state.secondLabel, state.control];
+	};
+	
+	var validate = graph.view.validate;
+	graph.view.validate = function()
+	{
+		counter = 0;
+		validate.apply(this, arguments);
+	};
+	
+	// Extends View menu
+	mxResources.parse('number=Number');
+
+    // Adds action
+    var action = ui.actions.addAction('number...', function()
+    {
+		enabled = !enabled;
+		graph.refresh();
+    });
+	
+    action.setToggleAction(true);
+	action.setSelectedCallback(function() { return enabled; });
     
-//    // Adds resource for action
-//    mxResources.parse('helloWorldAction=Hello, World!');
-//
-//    // Adds action
-//    ui.actions.addAction('helloWorldAction', function() {
-//        var ran = Math.floor((Math.random() * 100) + 1);
-//        mxUtils.alert('A random number is ' + ran);
-//    });
-//
-//    // Adds menu
-//    ui.menubar.addMenu('Hello, World Menu', function(menu, parent) {
-//        ui.menus.addMenuItem(menu, 'helloWorldAction');
-//    });
-//
-//    // Reorders menubar
-//    ui.menubar.container.insertBefore(ui.menubar.container.lastChild,
-//        ui.menubar.container.lastChild.previousSibling.previousSibling);
-//
-//    // Adds toolbar button
-//    ui.toolbar.addSeparator();
-//    var elt = ui.toolbar.addItem('', 'helloWorldAction');
-//
-//    // Cannot use built-in sprites
-//    elt.firstChild.style.backgroundImage = 'url(https://www.draw.io/images/logo-small.gif)';
-//    elt.firstChild.style.backgroundPosition = '2px 3px';
+	var menu = ui.menus.get('view');
+	var oldFunct = menu.funct;
+	
+	menu.funct = function(menu, parent)
+	{
+		oldFunct.apply(this, arguments);
+		
+		ui.menus.addMenuItems(menu, ['-', 'number'], parent);
+	};
+	
+	// Forces refresh if file was loaded before plugin
+	if (ui.getCurrentFile() != null)
+	{
+		graph.refresh();
+	}
 });
