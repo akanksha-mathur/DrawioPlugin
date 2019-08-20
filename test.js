@@ -11,7 +11,8 @@ Draw.loadPlugin(function(ui) {
 	var redrawShape = graph.cellRenderer.redrawShape;
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
-		alert(counter);
+		console.log("gd");
+		alert("gd");
 		var result = redrawShape.apply(this, arguments);
 
 		if (result && enabled && graph.model.isVertex(state.cell))
