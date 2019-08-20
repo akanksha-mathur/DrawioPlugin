@@ -12,6 +12,7 @@ Draw.loadPlugin(function(ui) {
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
 		alert("added");
+		console.log("added console");
 	};
 
 	// Destroys the shape number
