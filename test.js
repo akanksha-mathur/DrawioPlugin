@@ -12,7 +12,7 @@ Draw.loadPlugin(function(ui) {
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
 		console.log("test");
-		alert("counter"+counter);
+		alert("counter12"+counter);
 		var result = redrawShape.apply(this, arguments);
 
 		if (result && enabled && graph.model.isVertex(state.cell))
