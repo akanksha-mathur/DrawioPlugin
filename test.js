@@ -16,7 +16,8 @@ Draw.loadPlugin(function(ui) {
 		if (result && enabled && graph.model.isVertex(state.cell))
 		{
 			if (state.shape != null && state.secondLabel == null)
-			{
+			{	
+				alert("counter"+counter);
 				var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + (++counter) + '</div>';
 				state.secondLabel = new mxText(value, new mxRectangle(),
                         mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
