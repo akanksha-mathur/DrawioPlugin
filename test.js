@@ -11,7 +11,7 @@ Draw.loadPlugin(function(ui) {
 	var redrawShape = graph.cellRenderer.redrawShape;
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
-		console.log("gd");
+		console.log("test");
 		alert("gd");
 		var result = redrawShape.apply(this, arguments);
 
