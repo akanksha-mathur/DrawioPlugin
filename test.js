@@ -11,8 +11,6 @@ Draw.loadPlugin(function(ui) {
 	var redrawShape = graph.cellRenderer.redrawShape;
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
-		console.log("test");
-		alert("counter12"+counter);
 		var result = redrawShape.apply(this, arguments);
 
 		if (result && enabled && graph.model.isVertex(state.cell))
@@ -21,7 +19,8 @@ Draw.loadPlugin(function(ui) {
 			{
 				var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + (++counter) + '</div>';
 				state.secondLabel = new mxText(value, new mxRectangle(),
-						mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
+                        mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
+                        counter=++counter;
 
 				// Styles the label
 				state.secondLabel.size = 12;
