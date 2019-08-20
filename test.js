@@ -8,7 +8,8 @@ Draw.loadPlugin(function(ui) {
 	var counter = 0;
 	
 	// Creates the shape for the shape number and puts it into the draw pane
-	var redrawShape = graph.cellRenderer.redrawShape;
+    var redrawShape = graph.cellRenderer.redrawShape;
+    alert("Initial");
 	graph.cellRenderer.redrawShape = function(state, force, rendering)
 	{
 		var result = redrawShape.apply(this, arguments);
@@ -17,11 +18,12 @@ Draw.loadPlugin(function(ui) {
 		{
 			if (state.shape != null && state.secondLabel == null)
 			{	
-				alert("counter"+counter);
-				var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + (++counter) + '</div>';
+				
+                var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + (++counter) + '</div>';
+                alert("counter"+counter);
 				state.secondLabel = new mxText(value, new mxRectangle(),
                         mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
-                        counter=++counter;
+                        
 
 				// Styles the label
 				state.secondLabel.size = 12;
