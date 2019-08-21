@@ -60,7 +60,7 @@ Draw.loadPlugin(function(ui) {
 	};
 	
 	graph.cellRenderer.getShapesForState = function(state)
-	{
+	{	alert("shapes");
 		return [state.shape, state.text, state.secondLabel, state.control];
 	};
 	
