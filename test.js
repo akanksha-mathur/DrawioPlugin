@@ -65,8 +65,8 @@ Draw.loadPlugin(function(ui) {
 // 		alert(state.text);
 // 		alert(state.secondLabel);
 // 		alert(state.control);
-		alert(state.style);
-		alert(state.style[mxConstants.STYLE_SHAPE]);
+// 		alert(state.style);
+// 		alert(state.style[mxConstants.STYLE_SHAPE]);
 		return [state.shape, state.text, state.secondLabel, state.control];
 	};
 	
