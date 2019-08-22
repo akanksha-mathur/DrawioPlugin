@@ -25,7 +25,7 @@ Draw.loadPlugin(function(ui) {
 // 				state.cell.value=node;
 //                 var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + state.style[mxConstants.STYLE_SHAPE]+'=>'+(++counter) + '</div>';
 //                 alert("counter"+counter);
-				if(state.style[mxConstants.STYLE_SHAPE]="mxgraph.pid.pumps.centrifugal_pump_1"){
+				if(state.style[mxConstants.STYLE_SHAPE]=="mxgraph.pid.pumps.centrifugal_pump_1"){
                     var doc = mxUtils.createXmlDocument();
                         var node = doc.createElement('MyNode')
                         node.setAttribute('Pressure Increase (kgf/cm2)', '2');
