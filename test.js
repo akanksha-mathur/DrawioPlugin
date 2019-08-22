@@ -18,7 +18,10 @@ Draw.loadPlugin(function(ui) {
 		{
 			if (state.shape != null && state.secondLabel == null)
 			{	
-				
+				var node = doc.createElement('MyNode')
+node.setAttribute('test', 'MyLabel');
+node.setAttribute('attribute1', 'value1');
+				state.cell.value=node;
                 var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + state.style[mxConstants.STYLE_SHAPE]+'=>'+(++counter) + '</div>';
 //                 alert("counter"+counter);
 				state.secondLabel = new mxText(value, new mxRectangle(),
