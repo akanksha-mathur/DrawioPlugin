@@ -18,6 +18,7 @@ Draw.loadPlugin(function(ui) {
 		{
 			if (state.shape != null && state.secondLabel == null)
 			{	
+				var doc = mxUtils.createXmlDocument();
 				var node = doc.createElement('MyNode')
 node.setAttribute('test', 'MyLabel');
 node.setAttribute('attribute1', 'value1');
