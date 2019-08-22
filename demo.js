@@ -38,14 +38,14 @@ node.setAttribute('Prop2', 'value2');
                         var controllabel='Pump';
 			var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + controllabel +': '+(++counter) + '</div>';
                 }
-				if(state.style[mxConstants.STYLE_SHAPE]='mxgraph.pid.vessels.container,_tank,_cistern'){
-                    var doc = mxUtils.createXmlDocument();
-                                var node = doc.createElement('MyNode')
-                                node.setAttribute('Pressure Calculation Mode', 'Inlet Minimum');
-                                state.cell.value=node;
-                                var controllabel='Tank';
-			var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + controllabel+': '+(++counter) + '</div>';
-                }
+// 				if(state.style[mxConstants.STYLE_SHAPE]='mxgraph.pid.vessels.container,_tank,_cistern'){
+//                     var doc = mxUtils.createXmlDocument();
+//                                 var node = doc.createElement('MyNode')
+//                                 node.setAttribute('Pressure Calculation Mode', 'Inlet Minimum');
+//                                 state.cell.value=node;
+//                                 var controllabel='Tank';
+// 			var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + controllabel+': '+(++counter) + '</div>';
+//                 }
                 if(state.style[mxConstants.STYLE_SHAPE]='mxgraph.pid.misc.mixer'){
                     var doc = mxUtils.createXmlDocument();
                                     var node = doc.createElement('MyNode')
