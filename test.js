@@ -18,12 +18,37 @@ Draw.loadPlugin(function(ui) {
 		{
 			if (state.shape != null && state.secondLabel == null)
 			{	
-				var doc = mxUtils.createXmlDocument();
-				var node = doc.createElement('MyNode')
-node.setAttribute('test', 'MyLabel');
-node.setAttribute('attribute1', 'value1');
-				state.cell.value=node;
-                var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + state.style[mxConstants.STYLE_SHAPE]+'=>'+(++counter) + '</div>';
+				
+				switch(state.style[mxConstants.STYLE_SHAPE]){
+                case 'mxgraph.pid.pumps.centrifugal_pump_1':
+                        var doc = mxUtils.createXmlDocument();
+                        var node = doc.createElement('MyNode')
+                        node.setAttribute('Pressure Increase (kgf/cm2)', '2');
+                        node.setAttribute('Outlet Pressure (kgf/cm2)', '4');
+                        node.setAttribute('Efficiency (%)', '60');
+                        node.setAttribute('Power (KW)', '52');
+                        state.cell.value=node;
+                        var controllabel='Pump';
+                        break;
+
+                        case 'mxgraph.pid.vessels.container,_tank,_cistern':
+                                var doc = mxUtils.createXmlDocument();
+                                var node = doc.createElement('MyNode')
+                                node.setAttribute('Pressure Calculation Mode', 'Inlet Minimum');
+                                state.cell.value=node;
+                                var controllabel='Tank';
+                        break;
+                        case 'mxgraph.pid.misc.mixer':
+                                var doc = mxUtils.createXmlDocument();
+                                var node = doc.createElement('MyNode')
+                                node.setAttribute('Volume (m3)', '900');
+                                state.cell.value=node;
+                                var controllabel='Mixer';
+                        break;
+                }
+						
+				
+                var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + controllabel +': '+(++counter) + '</div>';
 //                 alert("counter"+counter);
 				state.secondLabel = new mxText(value, new mxRectangle(),
                         mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
