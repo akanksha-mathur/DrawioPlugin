@@ -2,13 +2,22 @@
  * Sample plugin.
  */
  
-    alert(" tyr");
- var arr=["test", "test1"];
+    
 Draw.loadPlugin(function(ui) {
-
+	alert(" tyr");
+ var arr=["test", "test1"];
 	var graph = ui.editor.graph;
 	var enabled = true;
 	var counter = 0;
+	var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("demo").innerHTML =
+    this.getResponseHeader("Last-Modified");
+  }
+};
+xhttp.open("GET", "https://www.quora.com/How-can-I-run-my-PHP-content-on-GitHub-pages", true);
+xhttp.send();
 	
 	// Creates the shape for the shape number and puts it into the draw pane
     var redrawShape = graph.cellRenderer.redrawShape;
