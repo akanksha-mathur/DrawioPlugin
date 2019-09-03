@@ -3,7 +3,7 @@
  */
  
     alert(" tyr");
- 
+ var arr=["test", "test1"];
 Draw.loadPlugin(function(ui) {
 
 	var graph = ui.editor.graph;
@@ -26,7 +26,7 @@ Draw.loadPlugin(function(ui) {
 node.setAttribute('Prop1', 'Value1');
 node.setAttribute('Prop2', 'value2');
 				state.cell.value=node;
-                var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + state.style[mxConstants.STYLE_SHAPE]+'=>'+(++counter) + '</div>';
+                var value = '<div style="padding:2px;border:1px solid gray;background:yellow;border-radius:2px;">' + state.style[mxConstants.STYLE_SHAPE]+'=>'+(++counter) +arr[1]+ '</div>';
 //                 alert("counter"+counter);
 				state.secondLabel = new mxText(value, new mxRectangle(),
                         mxConstants.ALIGN_LEFT, mxConstants.ALIGN_BOTTOM);
